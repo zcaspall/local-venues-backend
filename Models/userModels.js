@@ -10,9 +10,9 @@ async function createUser(first, last, username, email, password) {
 
     const sql = `
         INSERT INTO users
-            (userId, firstname, lastname, email, username, passwordHash)
+            (id, first, last, email, username, password)
         VALUES
-            (@userId, @firstname, @lastname, @email, @username, @passwordHash)
+            (@id, @first, @last, @email, @username, @password)
     `;
 
     const stmt = db.prepare(sql);

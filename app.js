@@ -34,9 +34,7 @@ app.use(express.static("public", {
 }));
 
 // user endpoints
-app.get("/", (req, res) => {
-    res.status(200).send("Hello World!\n");
-});
+app.get("/register", );
 
 // 404 Handler
 app.use(notFoundHandler);
