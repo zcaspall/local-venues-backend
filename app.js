@@ -27,14 +27,20 @@ const { func } = require("joi");
 const { notFoundHandler, productionErrorHandler, catchAsyncErrors } = require("./utils/errorHandler");
 
 app.use(express.json({limit: '200kb'}));
-app.use(express.urlencoded({ extended: false }));
-app.use(express.static("public", {
-    index: "index.html",
-    extensions: ['html', 'js', 'css', 'png', 'jpg', 'jpeg']
-}));
+// app.use(express.urlencoded({ extended: false }));
+// app.use(express.static("public", {
+//     index: "index.html",
+//     extensions: ['html', 'js', 'css', 'png', 'jpg', 'jpeg']
+// }));
+
+app.get("/", (req, res) => {
+    res.send("helllppp");
+})
 
 // user endpoints
-app.get("/register", );
+app.post("/register", (req, res) => {
+    res.send("Helllppp")
+});
 
 // 404 Handler
 app.use(notFoundHandler);
