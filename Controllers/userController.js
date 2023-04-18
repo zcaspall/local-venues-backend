@@ -14,6 +14,39 @@ async function createNewUser(req, res) {
     }
 }
 
+async function loginUser(req, res) {
+    const {username, password} = req.body;
+    const user = userModel.getUserByUsername(username);
+
+    if (!user) {
+        return res.sendStatus(400);
+    }
+
+    const {passwordHash, userId} = user;
+
+    try {
+        if (await argon2.verify(passwordHash, password)) {
+            req.session.regenerate((err) => {
+                if (err) {
+                    console.error(err);
+                    return res.sendstatus(500);
+                }
+
+                req.session.user = {};
+                req.session.user.userName = username;
+                req.session.user.userId = userId;
+                req.session.isLoggedIn = true;
+
+                return res.sendStatus(400);
+            });
+        } else {
+            return res.sendStatus(400);
+        }
+    } catch (err) {
+        console.error(err);
+    }
+}
+
 module.exports = {
     createNewUser
 }
