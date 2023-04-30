@@ -22,6 +22,13 @@ const sessionConfig = {
 
 app.use(session(sessionConfig));
 
+// Load Controllers
+const userController = require("./Controllers/userController");
+const eventController = require("./Controllers/eventController");
+
+// Load Validators
+// const eventValidator = require("./Validators/eventValidator");
+
 const { RedisClient } = require("redis");
 const { func } = require("joi");
 const { notFoundHandler, productionErrorHandler, catchAsyncErrors } = require("./utils/errorHandler");
@@ -29,14 +36,18 @@ const { notFoundHandler, productionErrorHandler, catchAsyncErrors } = require(".
 app.use(express.json({limit: '200kb'}));
 app.use(express.urlencoded({ extended: false }));
 
-const userController = require("./Controllers/userController");
-
 app.get("/", (req, res) => {
     res.send("helllppp");
 })
 
 // user endpoints
-app.post("/register", userController.createNewUser)
+app.post("/register", userController.createNewUser);
+
+// event endpoints
+app.post("/events", eventImages.single('file'), eventController.createEvent);
+app.get("/events", eventController.renderEventPage);
+app.get("/events/:eventId", eventController.renderEvent);
+app.post("/join/:eventId", catchAsyncErrors(eventController.joinEvent));
 
 // 404 Handler
 app.use(notFoundHandler);
