@@ -15,7 +15,7 @@ const sessionConfig = {
     saveUninitialized: false,
     name: "session",
     cookie: {
-        httpOnly: true,
+        httpOnly: false,
         maxAge: 1000 * 60 * 60 * 8,
     }
 };
@@ -27,11 +27,7 @@ const { func } = require("joi");
 const { notFoundHandler, productionErrorHandler, catchAsyncErrors } = require("./utils/errorHandler");
 
 app.use(express.json({limit: '200kb'}));
-// app.use(express.urlencoded({ extended: false }));
-// app.use(express.static("public", {
-//     index: "index.html",
-//     extensions: ['html', 'js', 'css', 'png', 'jpg', 'jpeg']
-// }));
+app.use(express.urlencoded({ extended: false }));
 
 app.get("/", (req, res) => {
     res.send("helllppp");
