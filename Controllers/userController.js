@@ -6,7 +6,7 @@ async function createNewUser(req, res) {
     const {first, last, username, email, password} = req.body;
 
     try {
-        await userModels.createUser(first, last, username, email, passowrd);
+        await userModel.createUser(first, last, username, email, password);
         return res.sendStatus(200);
     } catch (error) {
         console.error(error);

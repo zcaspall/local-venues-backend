@@ -29,14 +29,14 @@ const { notFoundHandler, productionErrorHandler, catchAsyncErrors } = require(".
 app.use(express.json({limit: '200kb'}));
 app.use(express.urlencoded({ extended: false }));
 
+const userController = require("./Controllers/userController");
+
 app.get("/", (req, res) => {
     res.send("helllppp");
 })
 
 // user endpoints
-app.post("/register", (req, res) => {
-    res.send("Helllppp")
-});
+app.post("/register", userController.createNewUser)
 
 // 404 Handler
 app.use(notFoundHandler);

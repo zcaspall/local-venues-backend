@@ -9,8 +9,8 @@ async function createUser(first, last, username, email, password) {
     const hash = await argon2.hash(password);
 
     const sql = `
-        INSERT INTO users
-            (id, first, last, email, username, password)
+        INSERT INTO Users
+            (id, first, last, email, username, passwordHash)
         VALUES
             (@id, @first, @last, @email, @username, @password)
     `;
