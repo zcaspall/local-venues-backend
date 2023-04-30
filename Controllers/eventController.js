@@ -1,5 +1,5 @@
 "use strict";
-const eventModels = require("../Models/eventModels");
+const eventModels = require("../Models/eventModel");
 
 function renderMain (req, res) {
     const { user, isLoggedIn } = req.session;

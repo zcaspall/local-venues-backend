@@ -44,10 +44,10 @@ app.get("/", (req, res) => {
 app.post("/register", userController.createNewUser);
 
 // event endpoints
-app.post("/events", eventImages.single('file'), eventController.createEvent);
-app.get("/events", eventController.renderEventPage);
-app.get("/events/:eventId", eventController.renderEvent);
-app.post("/join/:eventId", catchAsyncErrors(eventController.joinEvent));
+// app.post("/events", eventImages.single('file'), eventController.createEvent);
+// app.get("/events", eventController.renderEventPage);
+// app.get("/events/:eventId", eventController.renderEvent);
+// app.post("/join/:eventId", catchAsyncErrors(eventController.joinEvent));
 
 // 404 Handler
 app.use(notFoundHandler);
