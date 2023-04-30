@@ -32,6 +32,23 @@ async function createUser(first, last, username, email, password) {
     }
 };
 
+function getUserByUsername(username) {
+    const sql = `SELECT * FROM Users WHERE username = @username`;
+
+    const stmt = db.prepare(sql);
+
+    try {
+        stmt.get({
+            username,
+        });
+    } catch(err){
+        console.error(err);
+    }
+
+    return stmt
+}
+
 module.exports = {
-    createUser
+    createUser,
+    getUserByUsername
 }
