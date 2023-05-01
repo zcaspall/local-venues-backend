@@ -37,15 +37,11 @@ function getUserByUsername(username) {
 
     const stmt = db.prepare(sql);
 
-    try {
-        stmt.get({
-            username,
-        });
-    } catch(err){
-        console.error(err);
-    }
+    const record = stmt.get({
+        username
+    })
 
-    return stmt
+    return record;
 }
 
 module.exports = {

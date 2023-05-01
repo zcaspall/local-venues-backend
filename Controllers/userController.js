@@ -22,22 +22,23 @@ async function loginUser(req, res) {
         return res.sendStatus(400);
     }
 
-    const {passwordHash, userId} = user;
+
+    const {passwordHash, id} = user;
 
     try {
         if (await argon2.verify(passwordHash, password)) {
             req.session.regenerate((err) => {
                 if (err) {
                     console.error(err);
-                    return res.sendstatus(500);
+                    return res.sendStatus(500);
                 }
 
                 req.session.user = {};
                 req.session.user.userName = username;
-                req.session.user.userId = userId;
+                req.session.user.userId = id;
                 req.session.isLoggedIn = true;
 
-                return res.sendStatus(400);
+                return res.sendStatus(200);
             });
         } else {
             return res.sendStatus(400);
@@ -47,6 +48,12 @@ async function loginUser(req, res) {
     }
 }
 
+function getSession(req, res) {
+    return res.send(req.session);
+}
+
 module.exports = {
-    createNewUser
+    createNewUser,
+    loginUser,
+    getSession
 }
