@@ -8,8 +8,14 @@ const RedisStore = require("connect-redis")(session);
 const express = require("express");
 const app = express();
 
+const redisClient = redis.createClient({
+    legacyMode: true
+});
+
+redisClient.connect()
+
 const sessionConfig = {
-    store: new RedisStore({ client: redis.createClient() }),
+    store: new RedisStore({ client: redisClient }),
     secret: process.env.COOKIE_SECRET,
     resave: false,
     saveUninitialized: false,
@@ -22,12 +28,11 @@ const sessionConfig = {
 
 app.use(session(sessionConfig));
 
-const { RedisClient } = require("redis");
 const { func } = require("joi");
 const { notFoundHandler, productionErrorHandler, catchAsyncErrors } = require("./utils/errorHandler");
 
 app.use(express.json({limit: '200kb'}));
-// app.use(express.urlencoded({ extended: false }));
+app.use(express.urlencoded({ extended: false }));
 // app.use(express.static("public", {
 //     index: "index.html",
 //     extensions: ['html', 'js', 'css', 'png', 'jpg', 'jpeg']
@@ -40,7 +45,9 @@ app.get("/", (req, res) => {
 })
 
 // user endpoints
-app.post("/register", userController.createNewUser)
+app.post("/register", userController.createNewUser);
+app.post("/login", userController.loginUser);
+app.get("/user/session", userController.getSession);
 
 // 404 Handler
 app.use(notFoundHandler);
